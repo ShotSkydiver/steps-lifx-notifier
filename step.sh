@@ -40,11 +40,11 @@ fi
 
 # check whether to employ an effect instead of just turning it a solid color
 if [[ "${effect}" != "none" ]]; then
-    endpoint="lights/label:${bulb_label}/effects/${effect}"
+    endpoint="lights/${selector_type}:${bulb_label}/effects/${effect}"
     body="{\"color\":\"${color}\",\"from_color\":\"white\",\"cycles\":10}"
     method="POST"
 else
-    endpoint="lights/label:${bulb_label}/state"
+    endpoint="lights/${selector_type}:${bulb_label}/state"
     method="PUT"
 fi
 

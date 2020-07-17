@@ -9,9 +9,9 @@ description: |-
 
     If all colors fields will be empty, default colors will be used:
     "build start" - yellow, "build success" - green, "build failure" - red.
-website: https://github.com/vgaidarji/steps-lifx-notifier
-source_code_url: https://github.com/vgaidarji/steps-lifx-notifier
-support_url: https://github.com/vgaidarji/steps-lifx-notifier/issues
+website: https://github.com/ShotSkydiver/steps-lifx-notifier
+source_code_url: https://github.com/ShotSkydiver/steps-lifx-notifier
+support_url: https://github.com/ShotSkydiver/steps-lifx-notifier/issues
 host_os_tags:
     - "osx-10.8"
     - "osx-10.10"
@@ -31,11 +31,20 @@ inputs:
         This step uses official LIFX API,
         which requires OAuth2 Access token (https://api.developer.lifx.com/docs/authentication).
       is_required: true
+  - selector_type: "label"
+    opts:
+      title: "Selector type"
+      description: |
+        By default, only the name of a single light will be triggered. You can change this to specify a group instead.
+      value_options:
+        - "label"
+        - "group"
+        - "all"
   - bulb_label:
     opts:
-      title: "LIFX bulb label"
+      title: "LIFX light(s) selector label"
       description: |
-        This is the name of the LIFX bulb, eg. "Bedroom", "Office".
+        This is the name of the LIFX light or group, eg. "Bedroom", "Office".
       is_required: true
   - color_build_success: "green"
     opts:
