@@ -39,7 +39,7 @@ inputs:
       value_options:
         - "label"
         - "group"
-        - "all"
+        - "location"
   - bulb_label:
     opts:
       title: "LIFX light(s) selector label"
