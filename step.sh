@@ -1,28 +1,11 @@
 #!/bin/bash
 
-# defaults
-DEFAULT_COLOR_BUILD_SUCCESS="green"
-DEFAULT_COLOR_BUILD_FAILURE="red"
-
-# use custom colors if set (not empty string)
-is_custom_color=false
 if [ -n "${color_build_failure_custom}" ] ; then
     color_build_failure=${color_build_failure_custom}
-    is_custom_color=true
 fi
 
 if [ -n "${color_build_success_custom}" ] ; then
     color_build_success=${color_build_success_custom}
-    is_custom_color=true
-fi
-
-# use default colors if no colors provided (empty string)
-if [ -z "${color_build_failure}" ] ; then
-    color_build_failure=${DEFAULT_COLOR_BUILD_FAILURE}
-fi
-
-if [ -z “${color_build_success}” ] ; then
-    color_build_success=${DEFAULT_COLOR_BUILD_SUCCESS}
 fi
 
 # check which color to use
@@ -32,19 +15,21 @@ else
     color=${color_build_failure}
 fi
 
-if ${is_custom_color}; then
-    body="{\"color\":\"#${color}\",\"power\":\"on\"}"
+if [[ "${selector_type}" != "all" ]]; then
+    selector="${selector_type}:${bulb_label}"
 else
-    body="{\"color\":\"${color}\",\"power\":\"on\"}"
+    selector="all"
 fi
+
+body="{\"color\":\"${color}\",\"power\":\"on\"}"
 
 # check whether to employ an effect instead of just turning it a solid color
 if [[ "${effect}" != "none" ]]; then
-    endpoint="lights/${selector_type}:${bulb_label}/effects/${effect}"
-    body="{\"color\":\"${color}\",\"from_color\":\"white\",\"cycles\":10}"
+    endpoint="lights/${selector}/effects/${effect}"
+    body="{\"color\":\"${color}\",\"cycles\":\"${cycles}\",\"power_on\":\"true\"}"
     method="POST"
 else
-    endpoint="lights/${selector_type}:${bulb_label}/state"
+    endpoint="lights/${selector}/state"
     method="PUT"
 fi
 
